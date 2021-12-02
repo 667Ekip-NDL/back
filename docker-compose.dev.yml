@@ -1,0 +1,26 @@
+version: '3.1'
+
+services:
+
+  mongo:
+    image: mongo:4.4.11-rc0-focal
+    restart: unless-stopped
+    ports: 
+      - 6674:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${DB_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${DB_PASS}
+    volumes:
+      - db-data:/data/db
+
+  mongo-gui:
+    container_name: "mongo-gui"
+    image: ugleiton/mongo-gui
+    restart: always
+    ports:
+      - 6675:4321
+    environment:
+      MONGO_URL: mongodb://${DB_USER}:${DB_PASS}@mongo:27017
+
+volumes:
+  db-data:
