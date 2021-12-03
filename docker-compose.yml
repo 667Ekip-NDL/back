@@ -1,0 +1,32 @@
+version: '3.1'
+
+services:
+
+  mongo:
+    image: mongo:4.4.11-rc0-focal
+    restart: unless-stopped
+    ports: 
+      - 6674:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${DB_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - db-data:/data/db
+
+  api:
+    depends_on:
+      - mongo
+    build: ./api
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - 6673:8080
+    environment:
+      - DB_HOST=localhost
+      - DB_USER=$DB_USER
+      - DB_PASSWORD=$DB_PASSWORD
+      - DB_NAME=admin
+      - DB_PORT=27017
+
+volumes:
+  db-data:
