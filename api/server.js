@@ -39,9 +39,25 @@ mongoose
     process.exit();
   });
 
+  
 
 const personneModel = require("./src/models/personne.model");
 const sauvetageModel = require("./src/models/sauvetage.model");
+
+// let personnes = require('./json/personnes.json');
+// for (var i = 0; i < personnes.length; i++) {
+//     json=personnes[i]
+//     const data = new personneModel(json);
+//     data.save().then((x) => console.log(x));
+// }
+
+// //sauvetages
+// let sauvetages = require('./json/sauvetages.json');
+// for (var i = 0; i < sauvetages.length; i++) {
+//     json=sauvetages[i]
+//     const data = new sauvetageModel(json);
+//     data.save().then((x) => console.log(x));
+// }
 
 app.post("/personne", function (req, res) {
     const data = { nom: req.body.nom, prenom: req.body.prenom, title: req.body.title}
@@ -53,13 +69,54 @@ app.post("/personne", function (req, res) {
 })
 
 app.post("/sauvetage", function (req, res) {
-    const data = { title: req.body.title, date: req.body.date, participants: req.body.participants, capitaine: req.body.capitaine, saved: req.body.saved}
+    const data = { title: req.body.title, date: req.body.date, participants: req.body.participants, saved: req.body.saved}
     const sauvetage = new sauvetageModel(data);
     sauvetage.save().then( (sauvetage) => 
         console.log(sauvetage),
         res.json(sauvetage));
         // (data) => res.json(data));
 })
+
+// app.get("/find", function (req, res) {
+//     const data = req.query.search
+//     var array = [];
+
+//     const sauvetageJson = sauvetageModel.aggregate([
+//     { 
+//         $addFields: {
+//             results: { $regexMatch: { input: "$title", regex: data }},
+//             type: "sauvetage"
+//         }
+//     },
+
+//     { $match: { results: true }}
+//     ])
+//     .exec()
+
+//     const personneJson = personneModel.aggregate([
+//         { 
+//             $addFields: {
+//                 results: { $regexMatch: { input: "$nom", regex: data }},
+//                 type: "sauvetage"
+//             }
+//         },
+    
+//         { $match: { results: true }}
+//         ])
+//         .exec()
+
+
+//     var array = sauvetageJson.then((sauvetageJson) => {
+//         return Array(sauvetageJson)
+//     })
+//     var array2 = personneJson.then((personneJson) => {
+//         return Array(personneJson)
+//     });
+//     var finalArray = [array,array2]
+//     res.json({
+//         data: finalArray,
+//     })
+// })
 
 app.get("/find", function (req, res) {
     const data = req.query.search

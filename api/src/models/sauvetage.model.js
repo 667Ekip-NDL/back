@@ -5,7 +5,6 @@ const sauvetage = new mongoose.Schema(
         title: {type:String},
         date: {type:String},
         participants: {type:[String]},
-        capitaine: {type:String},
         saved: {type:String}
     },
     {
