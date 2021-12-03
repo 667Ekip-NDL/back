@@ -61,7 +61,7 @@ app.post("/sauvetage", function (req, res) {
         // (data) => res.json(data));
 })
 
-app.get("/find", (req, res) => {
+app.get("/find", function (req, res) {
     const data = req.query.search
     var array = [];
 
