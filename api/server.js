@@ -52,6 +52,41 @@ app.post("/personne", function (req, res) {
         // (data) => res.json(data));
 })
 
+app.post("/sauvetage", function (req, res) {
+    const data = { title: req.body.title, date: req.body.date, participants: req.body.participants, capitaine: req.body.capitaine, saved: req.body.saved}
+    const sauvetage = new sauvetageModel(data);
+    sauvetage.save().then( (sauvetage) => 
+        console.log(sauvetage),
+        res.json(sauvetage));
+        // (data) => res.json(data));
+})
+
+app.get("/test", function (req, res) {
+    res.json({
+        data: [
+                {"type":"sauvetage",
+                "data":{
+                "title":"tom",
+                "date":"5",
+                "participants":[],
+                "capitaine":"bob l'eponge",
+                "saved":"XXXX",
+                }
+            },
+                {"type":"personne",
+                "data":{
+                "nom":"XXX",
+                "prenom":"XXX",
+                "title":"XXXX",
+                }
+            },
+        ]
+        
+    })
+})
+
+
+
 // const tuto = new tutoModel({title: "test", description: "test", published: true});
 // tuto.save()
 
