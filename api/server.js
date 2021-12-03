@@ -60,30 +60,32 @@ app.post("/sauvetage", function (req, res) {
         res.json(sauvetage));
         // (data) => res.json(data));
 })
-
-app.get("/test", function (req, res) {
-    res.json({
-        data: [
-                {"type":"sauvetage",
-                "data":{
-                "title":"tom",
-                "date":"5",
-                "participants":[],
-                "capitaine":"bob l'eponge",
-                "saved":"XXXX",
-                }
-            },
-                {"type":"personne",
-                "data":{
-                "nom":"XXX",
-                "prenom":"XXX",
-                "title":"XXXX",
-                }
-            },
-        ]
-        
+if(process.env.ENVI === 'development'){
+        app.get("/test", function (req, res) {
+        res.json({
+            data: [
+                    {"type":"sauvetage",
+                    "data":{
+                    "title":"tom",
+                    "date":"5",
+                    "participants":[],
+                    "capitaine":"bob l'eponge",
+                    "saved":"XXXX",
+                    }
+                },
+                    {"type":"personne",
+                    "data":{
+                    "nom":"XXX",
+                    "prenom":"XXX",
+                    "title":"XXXX",
+                    }
+                },
+            ]
+            
+        })
     })
-})
+}
+
 
 
 
