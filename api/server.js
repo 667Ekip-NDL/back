@@ -118,7 +118,7 @@ app.post("/sauvetage", function (req, res) {
 //     })
 // })
 
-app.get("/find", function (req, res) {
+app.get("/findsauvetage", function (req, res) {
     const data = req.query.search
     var array = [];
 
@@ -127,6 +127,27 @@ app.get("/find", function (req, res) {
         $addFields: {
             results: { $regexMatch: { input: "$title", regex: data }},
             type: "sauvetage"
+        }
+    },
+
+    { $match: { results: true }}
+    ])
+    .exec()
+    json.then((json) => {res.json({
+            data: json,
+        })
+    });
+})
+
+app.get("/findpersonne", function (req, res) {
+    const data = req.query.search
+    var array = [];
+
+    const json = personneModel.aggregate([
+    { 
+        $addFields: {
+            results: { $regexMatch: { input: "$nom", regex: data.toUpperCase() }},
+            type: "personne"
         }
     },
 
