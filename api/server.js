@@ -60,6 +60,28 @@ app.post("/sauvetage", function (req, res) {
         res.json(sauvetage));
         // (data) => res.json(data));
 })
+
+app.get("/find", (req, res) => {
+    const data = req.query.search
+    var array = [];
+
+    const json = sauvetageModel.aggregate([
+    { 
+        $addFields: {
+            results: { $regexMatch: { input: "$title", regex: data }},
+            type: "sauvetage"
+        }
+    },
+
+    { $match: { results: true }}
+    ])
+    .exec()
+    json.then((json) => {res.json({
+            data: json,
+        })
+    });
+})
+
 if(process.env.ENVI === 'development'){
         app.get("/test", function (req, res) {
         res.json({
